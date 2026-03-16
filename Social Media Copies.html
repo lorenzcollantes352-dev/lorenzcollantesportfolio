@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Portfolio | Lorenz Collantes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent: #00f2fe;
+            --text-main: #ffffff;
+            --text-dim: rgba(255, 255, 255, 0.5);
+            --bg-url: url('5882125.jpg');
+        }
+
+        @keyframes pageIn {
+            from { opacity: 0; transform: translateY(20px); filter: blur(10px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body { 
+            font-family: 'Outfit', sans-serif; 
+            background-color: #08080a; 
+            color: var(--text-main); 
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .bg-fixed {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(8, 8, 10, 0.95), rgba(8, 8, 10, 0.90)), var(--bg-url);
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            animation: pageIn 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+
+        nav { 
+            position: fixed; top: 25px; left: 50%; transform: translateX(-50%); 
+            padding: 12px 30px; display: flex; gap: 25px; z-index: 1000;
+            background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border); border-radius: 50px;
+        }
+        nav a { text-decoration: none; color: var(--text-dim); font-size: 0.7rem; letter-spacing: 2px; transition: 0.3s; }
+        nav a:hover { color: var(--accent); }
+
+        .back-container {
+            max-width: 935px;
+            margin: 0 auto;
+            padding: 120px 20px 0;
+            text-align: left;
+            animation: pageIn 1s ease forwards 0.3s;
+            opacity: 0;
+        }
+
+        .back-btn {
+            text-decoration: none; color: var(--text-dim); font-size: 0.7rem;
+            letter-spacing: 2px; transition: 0.3s; display: inline-flex;
+            align-items: center; gap: 8px;
+        }
+        .back-btn:hover { color: var(--accent); transform: translateX(-5px); }
+
+        .header { padding: 30px 20px; text-align: center; animation: pageIn 1s ease forwards 0.4s; opacity: 0;}
+        .header h1 { font-size: 2.5rem; font-weight: 800; letter-spacing: -1.5px; margin-bottom: 10px; }
+        .header p { color: var(--accent); font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase; }
+
+        .ig-container {
+            max-width: 935px; 
+            margin: 0 auto;
+            padding: 0 20px 100px;
+            animation: pageIn 1s ease forwards 0.6s;
+            opacity: 0;
+        }
+
+        .ig-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px; 
+        }
+
+        .ig-item {
+            position: relative;
+            aspect-ratio: 1 / 1; 
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .ig-item img, .ig-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+
+        .ig-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            transition: 0.3s;
+            text-align: center;
+        }
+
+        .ig-item:hover .ig-overlay { opacity: 1; }
+        .ig-item:hover img, .ig-item:hover video { transform: scale(1.1); filter: blur(5px); }
+
+        .ig-overlay p { font-size: 0.8rem; line-height: 1.4; color: #fff; font-weight: 300; }
+        .ig-overlay span { margin-top: 15px; font-size: 0.6rem; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; }
+
+        #lightbox {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000; display: none; justify-content: center; align-items: center;
+            backdrop-filter: blur(10px);
+        }
+        #lightbox-content { max-width: 90%; max-height: 80vh; border-radius: 8px; box-shadow: 0 0 40px rgba(0,0,0,0.5); }
+        .close-lightbox { position: absolute; top: 30px; right: 40px; color: #fff; font-size: 2rem; cursor: pointer; font-weight: 200; }
+
+        @media (max-width: 768px) {
+            .ig-grid { gap: 3px; grid-template-columns: repeat(3, 1fr); } 
+            .ig-item { border-radius: 0; border: none; }
+            .header h1 { font-size: 1.8rem; }
+            .back-container { padding-top: 100px; }
+            nav { width: 90%; justify-content: center; font-size: 0.6rem; gap: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-fixed"></div>
+
+    <nav>
+        <a href="index.html">HOME</a>
+        <a href="#grid">SQUARE WORKS</a>
+        <a href="contact.html">HIRE ME</a>
+    </nav>
+
+    <div class="back-container">
+        <a href="COLLECTED WORKS.html" class="back-btn">← BACK TO COLLECTION</a>
+    </div>
+
+    <header class="header">
+        <p>Content Showcase</p>
+        <h1>Social Media Copies</h1>
+    </header>
+
+    <main class="ig-container" id="grid">
+        <div class="ig-grid">
+            
+            <div class="ig-item" onclick="openFull(this)">
+                <img src="PUB1.jpg" alt="Graphic Design">
+                <div class="ig-overlay">
+                    <p>"Design is not just what it looks like and feels like. Design is how it works."</p>
+                    <span>GRAPHIC DESIGN</span>
+                </div>
+            </div>
+
+            <div class="ig-item" onclick="openFull(this)">
+                <img src="PUB2.jpg" alt="Brand Design">
+                <div class="ig-overlay">
+                    <p>"Simplicity is the ultimate sophistication."</p>
+                    <span>BRAND DESIGN</span>
+                </div>
+            </div>
+            
+            <div class="ig-item" onclick="openFull(this)">
+                <img src="PUB3.jpg" alt="Brand Design">
+                <div class="ig-overlay">
+                    <p>"Good design is obvious. Great design is transparent."</p>
+                    <span>BRAND DESIGN</span>
+                </div>
+            </div>
+            
+            <div class="ig-item" onclick="openFull(this)">
+                <img src="PUB4.jpg" alt="Social Media">
+                <div class="ig-overlay">
+                    <p>"The details are not the details. They make the design."</p>
+                    <span>SOCIAL MEDIA</span>
+                </div>
+            </div>
+
+            <div class="ig-item" onclick="openFull(this)">
+                <img src="PUB5.jpg" alt="Social Media">
+                <div class="ig-overlay">
+                    <p>"Digital design is like painting, except the paint never dries."</p>
+                    <span>SOCIAL MEDIA</span>
+                </div>
+            </div>
+
+            <div class="ig-item" onmouseover="this.querySelector('video').play()" onmouseout="this.querySelector('video').pause()" onclick="openFull(this)">
+                <video muted loop playsinline>
+                    <source src="SOCIAL_2.mp4" type="video/mp4">
+                </video>
+                <div class="ig-overlay">
+                    <p>"Motion design is the art of giving life to static form."</p>
+                    <span>MOTION GRAPHICS</span>
+                </div>
+            </div>
+
+            <div class="ig-item" onclick="openFull(this)">
+                <img src="REGAL CAROUSEL7.jpg" alt="Social Media">
+                <div class="ig-overlay">
+                    <p>"Content precedes design. Design in the absence of content is not design, it’s decoration."</p>
+                    <span>SOCIAL MEDIA</span>
+                </div>
+            </div>
+            
+            <div class="ig-item" onclick="openFull(this)">
+                <img src="REGAL CAROUSEL8.jpg" alt="Social Media">
+                <div class="ig-overlay">
+                    <p>"Make it simple, but significant."</p>
+                    <span>SOCIAL MEDIA</span>
+                </div>
+            </div>
+
+            <div class="ig-item" onclick="openFull(this)">
+                <img src="REGAL CAROUSEL1.jpg" alt="Social Media">
+                <div class="ig-overlay">
+                    <p>"Recognizing the need is the primary condition for design."</p>
+                    <span>SOCIAL MEDIA</span>
+                </div>
+            </div>
+            
+            <div class="ig-item" onclick="openFull(this)">
+                <img src="REGAL CAROUSEL2.jpg" alt="Social Media">
+                <div class="ig-overlay">
+                    <p>"Design is the silent ambassador of your brand."</p>
+                    <span>SOCIAL MEDIA</span>
+                </div>
+            </div>
+
+            <div class="ig-item" onclick="openFull(this)">
+                <img src="REGAL CAROUSEL3.jpg" alt="Social Media">
+                <div class="ig-overlay">
+                    <p>"Whitespace is like air: it’s necessary for design to breathe."</p>
+                    <span>SOCIAL MEDIA</span>
+                </div>
+            </div>
+
+            <div class="ig-item" onclick="openFull(this)">
+                <img src="FRONTIER1.jpg" alt="Social Media">
+                <div class="ig-overlay">
+                    <p>"Type is a beautiful group of letters, not a group of beautiful letters."</p>
+                    <span>SOCIAL MEDIA</span>
+                </div>
+            </div>
+
+            <div class="ig-item" onclick="openFull(this)">
+                <img src="FRONTIER2.jpg" alt="Social Media">
+                <div class="ig-overlay">
+                    <p>"Color does not add a pleasant quality to design—it reinforces it."</p>
+                    <span>SOCIAL MEDIA</span>
+                </div>
+            </div>
+
+            <div class="ig-item" onclick="openFull(this)">
+                <img src="FRONTIER3.jpg" alt="Social Media">
+                <div class="ig-overlay">
+                    <p>"Grid systems are a tool for order, not a formula for design."</p>
+                    <span>SOCIAL MEDIA</span>
+                </div>
+            </div>
+
+            <div class="ig-item" onclick="openFull(this)">
+                <img src="FRONTIER4.jpg" alt="Social Media">
+                <div class="ig-overlay">
+                    <p>"Innovation in design often comes from limitations, not abundance."</p>
+                    <span>SOCIAL MEDIA</span>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div id="lightbox" onclick="closeFull()">
+        <span class="close-lightbox">&times;</span>
+        <div id="lightbox-media-container"></div>
+    </div>
+
+    <footer style="text-align: center; padding: 60px 40px; color: var(--text-dim); font-size: 0.6rem; letter-spacing: 2px;">
+        © 2026 LORENZ COLLANTES — GRAPHIC DESIGNER
+    </footer>
+
+    <script>
+        const lightbox = document.getElementById('lightbox');
+        const mediaContainer = document.getElementById('lightbox-media-container');
+
+        function openFull(element) {
+            mediaContainer.innerHTML = ''; 
+            const img = element.querySelector('img');
+            const video = element.querySelector('video');
+
+            if (img) {
+                const newImg = document.createElement('img');
+                newImg.src = img.src;
+                newImg.id = 'lightbox-content';
+                mediaContainer.appendChild(newImg);
+            } else if (video) {
+                const newVideo = document.createElement('video');
+                newVideo.src = video.querySelector('source').src;
+                newVideo.id = 'lightbox-content';
+                newVideo.controls = true;
+                newVideo.autoplay = true;
+                mediaContainer.appendChild(newVideo);
+            }
+
+            lightbox.style.display = 'flex';
+        }
+
+        function closeFull() {
+            lightbox.style.display = 'none';
+            mediaContainer.innerHTML = '';
+        }
+    </script>
+</body>
+</html>

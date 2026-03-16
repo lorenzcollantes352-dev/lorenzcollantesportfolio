@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorenz Collantes | Visual Storyteller</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --accent: #00f2fe;
+            --accent-glow: rgba(0, 242, 254, 0.5);
+            --text-main: #ffffff;
+            --text-dim: rgba(255, 255, 255, 0.5);
+            --bg-image: url('PHOTO.jpg'); 
+        }
+
+        @keyframes pageIn {
+            from { opacity: 0; transform: translateY(20px); filter: blur(10px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        html { scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Outfit', sans-serif;
+            color: var(--text-main);
+            background-color: #0a0a0c;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        /* --- BACKGROUND --- */
+        #bgOverlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background: radial-gradient(circle at top left, rgba(30, 30, 47, 0.85), rgba(0, 0, 0, 0.1)), var(--bg-image);
+            background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;
+            transition: filter 0.5s ease, opacity 0.5s ease;
+        }
+
+        .glass { background: var(--glass); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 20px; }
+
+        /* --- NAVIGATION --- */
+        .logo-container { position: fixed; top: 25px; left: 25px; z-index: 1001; text-decoration: none; transition: 0.4s; }
+        .logo-placeholder {
+            width: 45px; height: 45px; background: var(--glass); border: 1px solid var(--accent);
+            border-radius: 10px; display: flex; align-items: center; justify-content: center; transition: 0.5s;
+        }
+        .logo-placeholder span { color: var(--accent); font-weight: 800; font-size: 1.2rem; }
+        .logo-container:hover .logo-placeholder { transform: rotate(-8deg) scale(1.1); box-shadow: 0 0 25px var(--accent); border-color: #fff; }
+
+        nav { position: fixed; top: 25px; left: 50%; transform: translateX(-50%); padding: 12px 30px; display: flex; gap: 20px; z-index: 1000; }
+        nav a { text-decoration: none; color: var(--text-dim); font-size: 0.7rem; letter-spacing: 2px; transition: 0.3s; font-weight: 200; }
+        nav a:hover { color: var(--accent); text-shadow: 0 0 8px var(--accent); }
+
+        /* --- HERO --- */
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .hero-tagline { font-size: 0.7rem; letter-spacing: 6px; color: var(--accent); text-transform: uppercase; font-weight: 500; margin-bottom: 12px; opacity: 0; animation: pageIn 1s forwards 0.3s; }
+        .hero h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 800; letter-spacing: -2px; line-height: 1; background: linear-gradient(to bottom, #fff, var(--text-dim)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; opacity: 0; animation: pageIn 1s forwards 0.5s; }
+        .hero h2 { font-size: 1.1rem; font-weight: 300; letter-spacing: 4px; color: var(--text-dim); text-transform: uppercase; margin-top: 15px; opacity: 0; animation: pageIn 1s forwards 0.7s; }
+
+        /* --- SECTION GENERIC --- */
+        .section { padding: 80px 10%; max-width: 1200px; margin: 0 auto; }
+
+        /* --- WORK SECTION --- */
+        .work-row { display: flex; gap: 20px; overflow-x: auto; padding: 20px 0; scroll-snap-type: x mandatory; scrollbar-width: none; -ms-overflow-style: none; }
+        .work-row::-webkit-scrollbar { display: none; }
+        .card-link { text-decoration: none; color: inherit; flex: 0 0 280px; scroll-snap-align: center; }
+        .card { padding: 25px; transition: 0.5s; display: flex; flex-direction: column; align-items: center; height: 100%; border: 1px solid var(--glass-border); }
+        .card-image { width: 100%; aspect-ratio: 1/1; border-radius: 12px; overflow: hidden; margin-bottom: 20px; background: var(--glass-border); }
+        .card-image img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); transition: 0.8s; }
+        .card:hover { transform: translateY(-10px); border-color: var(--accent); box-shadow: 0 0 25px var(--accent-glow); }
+        .card:hover .card-image img { filter: grayscale(0%); transform: scale(1.05); }
+
+        /* --- PUBLISHED WORKS SECTION --- */
+        .published-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
+        .pub-link { text-decoration: none; color: inherit; display: block; }
+        .pub-card { text-align: left; padding: 25px; transition: 0.4s; border: 1px solid var(--glass-border); height: 100%; }
+        .pub-image { width: 100%; aspect-ratio: 16/9; border-radius: 10px; overflow: hidden; margin-bottom: 20px; background: var(--glass-border); border: 1px solid var(--glass-border); }
+        .pub-image img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); transition: 0.6s; }
+        
+        .pub-link:hover .pub-card { border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0, 242, 254, 0.1); }
+        .pub-link:hover .pub-image img { filter: grayscale(0%); transform: scale(1.05); }
+        
+        .pub-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .pub-tag { font-size: 0.6rem; color: var(--accent); border: 1px solid var(--accent); padding: 4px 10px; border-radius: 4px; text-transform: uppercase; }
+        .pub-icon { color: var(--accent); font-size: 0.9rem; transition: 0.3s; }
+        .pub-link:hover .pub-icon { transform: translate(2px, -2px); }
+
+        .pub-card h3 { margin-bottom: 10px; font-size: 1.2rem; }
+        .pub-card p { font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; }
+
+        /* --- ABOUT SECTION --- */
+        .about-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 40px; align-items: center; text-align: left; padding: 60px; }
+        .about-image { width: 100%; aspect-ratio: 4/5; background: var(--glass-border); border-radius: 15px; overflow: hidden; border: 1px solid var(--glass-border); }
+        .about-image img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); transition: 0.5s; }
+        .about-image:hover img { filter: grayscale(0%); }
+        .about-text h2 { font-size: 2.5rem; margin: 15px 0; letter-spacing: -1px; }
+        .about-text p { color: var(--text-dim); line-height: 1.8; font-weight: 300; font-size: 0.95rem; }
+
+        /* --- MARQUEE --- */
+        .marquee-container { width: 100%; overflow: hidden; padding: 40px 0; position: relative; mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent); }
+        .marquee-content { display: flex; animation: scroll 30s linear infinite; width: max-content; }
+        .marquee-item { width: 300px; height: 200px; margin: 0 15px; flex-shrink: 0; border-radius: 15px; overflow: hidden; border: 1px solid var(--glass-border); }
+        .marquee-item img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; transition: 0.5s; }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* --- TOOLS --- */
+        .tools-container { width: 100%; padding: 40px; margin-top: 40px; }
+        .tools-grid { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin: 30px 0; }
+        .tool-item { flex: 1; min-width: 140px; padding: 25px 15px; border-radius: 15px; background: rgba(255, 255, 255, 0.02); transition: 0.4s; border: 1px solid transparent; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .tool-item:hover { background: rgba(0, 242, 254, 0.05); border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 0 15px var(--accent-glow); }
+        .tool-icon { width: 35px; height: 35px; opacity: 0.8; }
+        .skill-tag { padding: 8px 20px; border-radius: 50px; background: var(--glass); border: 1px solid var(--glass-border); font-size: 0.7rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim); transition: 0.3s; }
+
+        #backToTop { position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; color: var(--accent); z-index: 1001; opacity: 0; visibility: hidden; transition: 0.4s; }
+        #backToTop.show { opacity: 1; visibility: visible; }
+        .email-btn { display: inline-block; text-decoration: none; color: #000; background: #fff; padding: 18px 45px; border-radius: 50px; font-weight: 600; transition: 0.4s; }
+        footer { padding: 60px; color: var(--text-dim); font-size: 0.7rem; letter-spacing: 2px; }
+
+        @media (max-width: 768px) {
+            nav { top: 85px; width: 95%; gap: 10px; padding: 10px; flex-wrap: wrap; justify-content: center; }
+            nav a { font-size: 0.6rem; }
+            .about-grid { grid-template-columns: 1fr; padding: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="bgOverlay"></div>
+
+    <a href="#home" class="logo-container">
+        <div class="logo-placeholder"><span>LC</span></div>
+    </a>
+
+    <nav class="glass">
+        <a href="#home">HOME</a>
+        <a href="#work">WORK</a>
+        <a href="#published">PUBLISHED</a>
+        <a href="#about">ABOUT</a>
+        <a href="#tools">TOOLS</a>
+        <a href="#contact-cta">CONTACT</a>
+    </nav>
+
+    <a href="#home" id="backToTop" class="glass">↑</a>
+
+    <section class="hero" id="home">
+        <span class="hero-tagline">EST. 2021 // CREATIVE STRATEGIST</span>
+        <h1>Visual Storyteller.</h1>
+        <h2>Digital Architect <span style="color: var(--accent); margin: 0 10px;">&</span> Experience Designer</h2>
+    </section>
+
+    <section class="section" id="work">
+        <div class="work-row">
+            <a href="COLLECTED WORKS.html" class="card-link">
+                <div class="card glass">
+                    <div class="card-image"><img src="Work Exp.png" alt="Works"></div>
+                    <h3>Catalogue</h3>
+                    <p style="color: var(--text-dim);">Graphic Design</p>
+                </div>
+            </a>
+            <a href="Experience.html" class="card-link">
+                <div class="card glass">
+                    <div class="card-image"><img src="Exp.png" alt="Exp"></div>
+                    <h3>Work Experiences</h3>
+                    <p style="color: var(--text-dim);">Professional Journey</p>
+                </div>
+            </a>
+            <a href="ARTICLE.html" class="card-link">
+                <div class="card glass">
+                    <div class="card-image"><img src="ARTICLE_THUMB.png" alt="Articles"></div>
+                    <h3>Article</h3>
+                    <p style="color: var(--text-dim);">Written Insights</p>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <section class="section" id="published">
+        <span style="color: var(--accent); font-size: 0.7rem; letter-spacing: 5px; text-transform: uppercase;">Internship Journey</span>
+        <h2 style="font-size: 2.5rem; margin-top: 10px;">Published Content</h2>
+        
+        <div class="published-grid">
+            <a href="https://www.facebook.com/share/v/v3QaSEeGk7fwdaU8/" class="pub-link">
+                <div class="pub-card glass">
+                    <div class="pub-image">
+                        <img src="SASSA.jpg" alt="Suzuki Turnover">
+                    </div>
+                    <div class="pub-meta">
+                        <span class="pub-tag">Content Writing</span>
+                        <span class="pub-icon">↗</span>
+                    </div>
+                    <h3>Song Association with Sassa Gurl</h3>
+                    <p>Authored the official content for Sassa Gurl's PR material for Regal Studio Presents: Queen Brother.</p>
+                </div>
+            </a>
+
+            <a href="https://www.tiktok.com/@regalentertainmentinc/video/7444424700115127570?is_from_webapp=1&sender_device=pc" class="pub-link">
+                <div class="pub-card glass">
+                    <div class="pub-image">
+                        <img src="MFY.jpg" alt="Vertical Content">
+                    </div>
+                    <div class="pub-meta">
+                        <span class="pub-tag">Content Creation</span>
+                        <span class="pub-icon">↗</span>
+                    </div>
+                    <h3>My Future You BTS</h3>
+                    <p>Special behind-the-scenes feature that showcases the moments, effort, and creativity involved in the making of My Future You.</p>
+                </div>
+            </a>
+
+            <a href="https://your-link-here.com" target="_blank" class="pub-link">
+                <div class="pub-card glass">
+                    <div class="pub-image">
+                        <img src="SHORT1.jpg" alt="Regal FB Reel">
+                    </div>
+                    <div class="pub-meta">
+                        <span class="pub-tag">Facebook Reel</span>
+                        <span class="pub-icon">↗</span>
+                    </div>
+                    <h3>Shortform Content</h3>
+                    <p>Conceptualized and deployed a digital calculation tool for automotive service billing, integrating complex discount logic and Philippine Peso localized data.</p>
+                </div>
+
+	    <a href="https://your-link-here.com" target="_blank" class="pub-link">
+                <div class="pub-card glass">
+                    <div class="pub-image">
+                        <img src="SHORT2.jpg" alt="Regal FB Reel">
+                    </div>
+                    <div class="pub-meta">
+                        <span class="pub-tag">Facebook Reel</span>
+                        <span class="pub-icon">↗</span>
+                    </div>
+                    <h3>Shortform Content</h3>
+                    <p>Conceptualized and deployed a digital calculation tool for automotive service billing, integrating complex discount logic and Philippine Peso localized data.</p>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <section class="section" id="about">
+        <div class="glass about-grid">
+            <div class="about-image">
+                <img src="INSPO.jpg" alt="Lorenz Collantes">
+            </div>
+            <div class="about-text">
+                <span style="color: var(--accent); font-size: 0.7rem; letter-spacing: 5px; text-transform: uppercase;">The Creator</span>
+                <h2>Lorenz Collantes</h2>
+                <p>
+                    Known as "Gab" in the creative space, I operate at the intersection of architecture and digital design. My work ranges from 3D architectural visualization to automating complex HRIS systems. 
+                    <br><br>
+                    I specialize in stripping away visual noise to create high-impact assets that tell a clear story. Whether it's designing technical service standards for automotive leaders or building responsive web interfaces, my focus is always on precision, functionality, and minimalist aesthetics.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="showcase">
+        <div class="marquee-container">
+            <div class="marquee-content">
+                <div class="marquee-item"><img src="DESIGN1.jpg" alt="1"></div>
+                <div class="marquee-item"><img src="DESIGN2.jpg" alt="2"></div>
+                <div class="marquee-item"><img src="DESIGN3.jpg" alt="3"></div>
+                <div class="marquee-item"><img src="DESIGN4.jpg" alt="4"></div>
+                <div class="marquee-item"><img src="DESIGN5.jpg" alt="5"></div>
+                <div class="marquee-item"><img src="DESIGN1.jpg" alt="1"></div>
+                <div class="marquee-item"><img src="DESIGN2.jpg" alt="2"></div>
+                <div class="marquee-item"><img src="DESIGN3.jpg" alt="3"></div>
+                <div class="marquee-item"><img src="DESIGN4.jpg" alt="4"></div>
+                <div class="marquee-item"><img src="DESIGN5.jpg" alt="5"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="tools">
+        <div class="tools-container glass">
+            <h2>Tools Specialization</h2>
+            <div class="tools-grid">
+                <div class="tool-item">
+                    <img src="figma-icon.png" alt="Figma" class="tool-icon">
+                    <strong>Figma</strong>
+                    <span style="font-size: 0.6rem; color: var(--text-dim);">INTERFACE</span>
+                </div>
+                <div class="tool-item">
+                    <img src="adobe-icon.png" alt="Adobe" class="tool-icon">
+                    <strong>Adobe CC</strong>
+                    <span style="font-size: 0.6rem; color: var(--text-dim);">VISUALS</span>
+                </div>
+                <div class="tool-item">
+                    <img src="canva-icon.png" alt="Canva" class="tool-icon">
+                    <strong>Canva</strong>
+                    <span style="font-size: 0.6rem; color: var(--text-dim);">LAYOUT</span>
+                </div>
+                <div class="tool-item">
+                    <img src="sketchup-icon.png" alt="Sketchup" class="tool-icon">
+                    <strong>Sketchup</strong>
+                    <span style="font-size: 0.6rem; color: var(--text-dim);">3D ASSETS</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="contact-cta">
+        <div class="glass" style="width: 100%; padding: 80px 20px; border-radius: 30px; position: relative; overflow: hidden;">
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; height: 300px; background: var(--accent); filter: blur(150px); opacity: 0.15; z-index: -1;"></div>
+            <h2 style="font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 800; margin: 20px 0 10px; letter-spacing: -2px;">Let's talk.</h2>
+            <a href="contact.html" class="email-btn">SEND A MESSAGE</a>
+        </div>
+    </section>
+
+    <footer>© 2026 LORENZ COLLANTES — DESIGN & STRATEGY</footer>
+
+    <script>
+        window.addEventListener('scroll', function() {
+            const bg = document.getElementById('bgOverlay');
+            const btt = document.getElementById('backToTop');
+            const scrollPos = window.scrollY;
+            
+            let blurVal = Math.min(scrollPos / 80, 12);
+            let opacityVal = Math.max(1 - (scrollPos / 1000), 0.3);
+
+            bg.style.filter = `blur(${blurVal}px) brightness(0.7)`;
+            bg.style.opacity = opacityVal;
+
+            if (scrollPos > 400) { btt.classList.add('show'); } 
+            else { btt.classList.remove('show'); }
+        });
+    </script>
+</body>
+</html>

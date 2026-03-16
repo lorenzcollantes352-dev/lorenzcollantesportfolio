@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiences | Lorenz Collantes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent: #00f2fe;
+            --text-main: #ffffff;
+            --text-dim: rgba(255, 255, 255, 0.6);
+            --bg-url: url('500202721_1003824718619282_4534991312127193401_n.jpg');
+        }
+
+        /* --- TRANSITION ANIMATIONS --- */
+        @keyframes reveal {
+            from { opacity: 0; transform: translateY(30px); filter: blur(10px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        @keyframes slideOut {
+            from { opacity: 1; transform: translateY(0); filter: blur(0); }
+            to { opacity: 0; transform: translateY(-40px); filter: blur(15px); }
+        }
+
+        .page-exit-active {
+            animation: slideOut 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #0a0a0c;
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- IMMERSIVE BACKGROUND --- */
+        .bg-fixed {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to right, rgba(10, 10, 12, 0.95) 30%, rgba(10, 10, 12, 0.4)), var(--bg-url);
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            transition: opacity 0.8s ease;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            padding: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            opacity: 0;
+            animation: reveal 1s ease forwards 0.8s;
+        }
+        .back-link {
+            text-decoration: none;
+            color: var(--accent);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .back-link:hover { opacity: 0.7; transform: translateX(-5px); }
+
+        /* --- MAIN CONTENT --- */
+        main {
+            padding: 100px 10%;
+            max-width: 1400px;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: left;
+        }
+
+        .category-tag {
+            color: var(--accent);
+            font-size: 0.75rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            display: block;
+            opacity: 0;
+            animation: reveal 1s ease forwards 0.2s;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 900;
+            line-height: 0.9;
+            margin-bottom: 30px;
+            letter-spacing: -3px;
+            opacity: 0;
+            animation: reveal 1s ease forwards 0.4s;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--text-dim);
+            font-weight: 300;
+            max-width: 600px;
+            margin-bottom: 50px;
+            letter-spacing: 0.5px;
+            opacity: 0;
+            animation: reveal 1s ease forwards 0.5s;
+        }
+
+        /* --- CONTENT BODY --- */
+        .experience-body {
+            max-width: 700px;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            padding: 50px;
+            border-left: 2px solid var(--accent);
+            border-radius: 0 20px 20px 0;
+            opacity: 0;
+            animation: reveal 1s ease forwards 0.6s;
+        }
+
+        .experience-body p {
+            font-size: 1.1rem;
+            font-weight: 200;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 25px;
+        }
+
+        .experience-body b {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            main { padding: 60px 5%; }
+            .experience-body { padding: 30px; border-radius: 10px; }
+            .bg-fixed { background: linear-gradient(to bottom, rgba(10, 10, 12, 0.8), rgba(10, 10, 12, 1)), var(--bg-url); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-fixed" id="bgOverlay"></div>
+
+    <nav>
+        <a href="index.html" id="backBtn" class="back-link">← BACK TO HOME</a>
+    </nav>
+
+    <main id="contentMain">
+        <span class="category-tag">Career Journey</span>
+        
+        <h1>Professional <br> Journey.</h1>
+
+        <h2>A timeline of creative problem solving and strategic visual direction.</h2>
+
+        <div class="experience-body">
+            <p>
+                <b>2025 — Present // Automobile Service Marketing Graphic Artist Specialist </b> <br>
+                Creative freelance visual graphic designer specializing in branding, digital design, and visual storytelling. Experienced in translating ideas into compelling visuals.
+            </p>
+            <p>
+                <b>2025 — Present // Freelance Visual Graphic Designer</b> <br>
+                Developing brand identities and digital assets, bridging the gap between business goals and aesthetic excellence.
+            </p>
+            <p>
+	<b>March 2025  // Research Recruiter Specialist - Contractual</b> <br>
+               Responsible for sourcing and screening participants for market research studies, coordinating schedules, and ensuring qualified respondents are recruited to support accurate data collection.
+            </p>
+	<b>2024 // Content Producer - Regal Entertainment</b> <br>
+                Developing content calendars, executing production (shooting, editing, writing), managing SEO, analyzing performance metrics, and ensuring brand consistency across all outputs.
+            </p>
+            <p>
+                My work is driven by the belief that <b>design is a language</b>. I prioritize clarity and emotional resonance above all else.
+            </p>
+        </div>
+    </main>
+
+    <script>
+        // HANDLE BACK TRANSITION
+        document.getElementById('backBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            const destination = this.getAttribute('href');
+            
+            // Add exit classes
+            document.getElementById('contentMain').classList.add('page-exit-active');
+            document.querySelector('nav').classList.add('page-exit-active');
+            document.getElementById('bgOverlay').style.opacity = '0';
+
+            // Redirect after animation
+            setTimeout(() => {
+                window.location.href = destination;
+            }, 700);
+        });
+    </script>
+
+</body>
+</html>
